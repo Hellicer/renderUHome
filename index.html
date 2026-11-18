@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>3D-візуалізація квартири</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./assets/bootstrap-icons.min.css">
 </head>
 <body>
   <div id="scene"></div>
@@ -46,8 +47,9 @@
       <button id="restoreLabels">Показати всі мітки</button>
     </div>
     <section class="views"><strong>Сталі ракурси</strong><div class="view-buttons">
-      <button data-view="top">План згори</button><button data-view="entry">Від входу</button>
-      <button data-view="rooms">З боку кімнат</button><button data-view="iso">Ізометрія</button>
+      <button data-view="top"><i class="bi bi-arrows-vertical" aria-hidden="true"></i> Вид зверху</button><button data-view="side"><i class="bi bi-layout-sidebar" aria-hidden="true"></i> Вид збоку</button>
+      <button data-view="2d"><i class="bi bi-map" aria-hidden="true"></i> Вид 2D</button><button data-view="iso"><i class="bi bi-boxes" aria-hidden="true"></i> Ізометрія</button>
+      <button data-view="free"><i class="bi bi-arrows-move" aria-hidden="true"></i> Вільний огляд</button>
     </div></section>
     <section class="item-controls" aria-label="Розміщення елемента">
       <div class="item-heading"><strong>Розміщення елемента</strong><button id="placeItem" type="button">＋ Додати</button></div>
@@ -75,10 +77,11 @@
     </div>
   </section>
   <nav class="nav" aria-label="Керування 3D-ракурсом">
-    <div class="nav-row"><button id="tiltUp" title="Більше згори" aria-label="Більше згори">↑</button><button id="resetView" title="Ізометричний вигляд" aria-label="Ізометричний вигляд">⌂</button><button id="zoomIn" title="Збільшити" aria-label="Збільшити">＋</button></div>
-    <div class="nav-row"><button id="rotateLeft" title="Повернути ліворуч" aria-label="Повернути ліворуч">↶</button><button id="top" title="Вигляд згори" aria-label="Вигляд згори">▦</button><button id="rotateRight" title="Повернути праворуч" aria-label="Повернути праворуч">↷</button></div>
-    <div class="nav-row"><button id="zoomOut" title="Зменшити" aria-label="Зменшити">−</button><button id="tiltDown" title="Більше збоку" aria-label="Більше збоку">↓</button><button id="home" title="Початковий ракурс" aria-label="Початковий ракурс">⌂</button></div>
-    <div class="nav-row history-row"><button id="undo" title="Назад" aria-label="Назад">↶ Назад</button><span></span><button id="redo" title="Вперед" aria-label="Вперед">Вперед ↷</button></div>
+    <div class="nav-row"><span></span><button id="tiltUp" title="Більше згори" aria-label="Більше згори"><i class="bi bi-chevron-up" aria-hidden="true"></i></button><span></span></div>
+    <div class="nav-row"><button id="rotateLeft" title="Повернути ліворуч" aria-label="Повернути ліворуч"><i class="bi bi-arrow-90deg-left" aria-hidden="true"></i></button><span class="nav-center" aria-hidden="true"></span><button id="rotateRight" title="Повернути праворуч" aria-label="Повернути праворуч"><i class="bi bi-arrow-90deg-right" aria-hidden="true"></i></button></div>
+    <div class="nav-row zoom-row"><button id="zoomOut" title="Зменшити" aria-label="Зменшити"><i class="bi bi-zoom-out" aria-hidden="true"></i></button><button id="zoomIn" title="Збільшити" aria-label="Збільшити"><i class="bi bi-zoom-in" aria-hidden="true"></i></button></div>
+    <div class="nav-row"><span></span><button id="tiltDown" title="Більше збоку" aria-label="Більше збоку"><i class="bi bi-chevron-down" aria-hidden="true"></i></button><span></span></div>
+    <div class="nav-row history-row"><button id="undo" title="Назад" aria-label="Назад"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i><span>Назад</span></button><span></span><button id="redo" title="Вперед" aria-label="Вперед"><span>Вперед</span><i class="bi bi-arrow-clockwise" aria-hidden="true"></i></button></div>
   </nav>
   <dialog id="itemDialog" class="item-dialog"><form id="itemForm">
     <div class="dialog-head"><h2>Додати елемент</h2><button id="closeItemDialog" type="button" aria-label="Закрити">×</button></div>

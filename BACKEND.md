@@ -7,7 +7,7 @@ Supabase дає цій статичній сторінці авторизаці�
 ## Підготовлена схема
 
 1. Створи Supabase project.
-2. Відкрий **SQL Editor**, запусти `supabase/schema.sql`.
+2. Відкрий **SQL Editor**, повністю скопіюй уміст файлу [`supabase/schema.sql`](./supabase/schema.sql) у редактор і натисни **Run**. Не вводь у SQL редактор сам текст `supabase/schema.sql` — це назва локального файлу, а не SQL-команда.
 3. У **Authentication → Providers** увімкни email-вхід (посилання або код).
 4. Додай Project URL і publishable/anon key у frontend-конфігурацію. Не використовуй і не передавай `service_role` key у браузер.
 5. Додай URL локальної розробки та продакшну в Auth redirect URLs.

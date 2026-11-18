@@ -14,10 +14,10 @@
     <div class="rooms">
       <span>Кухня · кімната 3</span><span>8,4 м²</span>
       <span>Кімната 4</span><span>11,9 м²</span>
-      <span>Кімната 5</span><span>11,2 м²</span>
+      <span>Кімната 5</span><span>≈12,3 м²</span>
       <span>Коридор</span><span>≈10,4 м²</span>
       <span>Туалет · кімната 2</span><span>1,0 м²</span>
-      <span>Ванна · кімната 6</span><span>≈3,35 м²</span>
+      <span>Ванна · кімната 6</span><span>2,7 м²</span>
       <span>Кімната 7 · нижній виступ</span><span>15,8 м²</span>
     </div>
     <section class="cloud" aria-label="Проєкти користувачів">
@@ -37,8 +37,6 @@
     <div class="controls">
       <button id="height">Стіни: зріз</button>
       <button id="labels" class="active">Підписи: так</button>
-      <button id="top">Вигляд згори</button>
-      <button id="home">Початковий ракурс</button>
       <button id="paint">Пензлик: вимкнено</button>
       <input id="brushColor" type="color" value="#d24735" aria-label="Колір пензлика" title="Колір лінії">
       <button id="grid" class="active">Сітка X/Y: так</button>
@@ -47,6 +45,21 @@
       <button id="deleteLabels">Видалити мітку</button>
       <button id="restoreLabels">Показати всі мітки</button>
     </div>
+    <section class="views"><strong>Сталі ракурси</strong><div class="view-buttons">
+      <button data-view="top">План згори</button><button data-view="entry">Від входу</button>
+      <button data-view="rooms">З боку кімнат</button><button data-view="iso">Ізометрія</button>
+    </div></section>
+    <section class="item-controls" aria-label="Розміщення елемента">
+      <div class="item-heading"><strong>Розміщення елемента</strong><button id="placeItem" type="button">＋ Додати</button></div>
+      <div id="selectedItemName" class="item-name">Клацніть предмет або додайте новий</div>
+      <div class="placement-row"><div class="arrows" aria-label="Зсув елемента">
+        <span></span><button data-move="0,-1" aria-label="Посунути до верху плану">↑</button><span></span>
+        <button data-move="-1,0" aria-label="Посунути ліворуч">←</button><span class="arrow-center">•</span><button data-move="1,0" aria-label="Посунути праворуч">→</button>
+        <span></span><button data-move="0,1" aria-label="Посунути до низу плану">↓</button><span></span>
+      </div><label class="move-step">Крок<select id="moveStep"><option value="0.05">5 см</option><option value="0.1" selected>10 см</option><option value="0.25">25 см</option></select></label></div>
+      <label class="default-marker"><input id="showDefault" type="checkbox"> Показати початкове місце</label>
+      <div class="item-actions"><button id="resetItem" type="button" disabled>Повернути на місце</button><button id="deleteItem" type="button" disabled>Видалити</button></div>
+    </section>
     <p class="hint">Власні виміри та штрихи синхронізуються з обраним проєктом. Публічні проєкти інших користувачів доступні лише для перегляду.</p>
   </aside>
   <div class="compass">План орієнтовано<br>за осями вихідної моделі</div>
@@ -58,14 +71,23 @@
       <button id="toolMeasure" title="Лінійка" aria-label="Лінійка">⌁</button>
       <button id="toolBrush" title="Пензлик" aria-label="Пензлик">✎</button>
       <button id="toolDelete" title="Видалити мітку" aria-label="Видалити мітку">⌫</button>
+      <button id="toolItem" title="Додати або вибрати елемент" aria-label="Додати або вибрати елемент">▧</button>
     </div>
   </section>
   <nav class="nav" aria-label="Керування 3D-ракурсом">
-    <button class="empty" tabindex="-1">·</button><button id="tiltUp" title="Більше згори" aria-label="Більше згори">↑</button><button id="zoomIn" title="Збільшити" aria-label="Збільшити">+</button>
-    <button id="rotateLeft" title="Повернути ліворуч" aria-label="Повернути ліворуч">←</button><button id="resetView" title="Скинути ракурс" aria-label="Скинути ракурс">⌂</button><button id="rotateRight" title="Повернути праворуч" aria-label="Повернути праворуч">→</button>
-    <button id="zoomOut" title="Зменшити" aria-label="Зменшити">−</button><button id="tiltDown" title="Більше збоку" aria-label="Більше збоку">↓</button><button class="empty" tabindex="-1">·</button>
-    <button id="undo" title="Назад" aria-label="Назад">↶</button><button class="empty" tabindex="-1">·</button><button id="redo" title="Вперед" aria-label="Вперед">↷</button>
+    <div class="nav-row"><button id="tiltUp" title="Більше згори" aria-label="Більше згори">↑</button><button id="resetView" title="Ізометричний вигляд" aria-label="Ізометричний вигляд">⌂</button><button id="zoomIn" title="Збільшити" aria-label="Збільшити">＋</button></div>
+    <div class="nav-row"><button id="rotateLeft" title="Повернути ліворуч" aria-label="Повернути ліворуч">↶</button><button id="top" title="Вигляд згори" aria-label="Вигляд згори">▦</button><button id="rotateRight" title="Повернути праворуч" aria-label="Повернути праворуч">↷</button></div>
+    <div class="nav-row"><button id="zoomOut" title="Зменшити" aria-label="Зменшити">−</button><button id="tiltDown" title="Більше збоку" aria-label="Більше збоку">↓</button><button id="home" title="Початковий ракурс" aria-label="Початковий ракурс">⌂</button></div>
+    <div class="nav-row history-row"><button id="undo" title="Назад" aria-label="Назад">↶ Назад</button><span></span><button id="redo" title="Вперед" aria-label="Вперед">Вперед ↷</button></div>
   </nav>
+  <dialog id="itemDialog" class="item-dialog"><form id="itemForm">
+    <div class="dialog-head"><h2>Додати елемент</h2><button id="closeItemDialog" type="button" aria-label="Закрити">×</button></div>
+    <p id="placementCoords" class="hint"></p>
+    <label>Назва<input id="itemLabel" type="text" value="Новий елемент" maxlength="50" required></label>
+    <div class="dimensions"><label>Ширина, м<input id="itemWidth" type="number" min="0.05" max="10" step="0.01" value="0.80" required></label><label>Висота, м<input id="itemHeight" type="number" min="0.05" max="5" step="0.01" value="0.75" required></label><label>Глибина, м<input id="itemDepth" type="number" min="0.05" max="10" step="0.01" value="0.45" required></label></div>
+    <label>Колір<input id="itemColor" type="color" value="#8b6b4e"></label>
+    <div class="dialog-actions"><button type="button" id="cancelItem">Скасувати</button><button type="submit" class="primary-action">Додати на план</button></div>
+  </form></dialog>
   <script src="./supabase-config.js"></script>
   <script src="./supabase-client.js"></script>
   <script src="./app.js" defer></script>

@@ -19,7 +19,7 @@
   }
   function planData() {
     const app = window.apartmentApp;
-    return { version: 1, rooms: app.roomData.map(({ name, pts, color }) => ({ name, pts, color })), walls: app.wallDefs };
+    return { version: 2, rooms: app.roomData.map(({ name, pts, color }) => ({ name, pts, color })), walls: app.wallDefs, items: app.getItems() };
   }
   function localSnapshot(rows) {
     const snapshot = { wallMarks: [], measurements: [], hiddenLabels: [], measureStart: null, measureEnd: null };
@@ -70,6 +70,13 @@
       if (overlayError) throw overlayError;
       const mine = annotations.filter(row => row.author_id === user.id);
       window.apartmentApp.loadRemoteState(localSnapshot(mine));
+      window.apartmentApp.loadItems(active.plan?.items || []);
+      if (active.plan?.version !== 2) {
+        const migratedPlan = planData();
+        const { error: migrationError } = await client.from('projects').update({ plan: migratedPlan }).eq('id', active.id);
+        if (migrationError) throw migrationError;
+        active.plan = migratedPlan;
+      }
       window.apartmentApp.sharedLayers.splice(0, window.apartmentApp.sharedLayers.length);
       const foreign = annotations.filter(row => row.author_id !== user.id);
       if (foreign.length) window.apartmentApp.sharedLayers.push({ id: active.id, plan: active.plan, annotations: foreign });
@@ -137,6 +144,9 @@
       const { error } = await client.from('annotations').insert(rows);
       if (error) throw error;
     }
+    const { error: planError } = await client.from('projects').update({ plan: planData() }).eq('id', active.id);
+    if (planError) throw planError;
+    active.plan = planData();
     message('Збережено');
   }
   function scheduleSave() {

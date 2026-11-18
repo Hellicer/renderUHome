@@ -1,16 +1,14 @@
 <!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101417">
-  <meta name="description" content="Інтерактивна 3D-візуалізація плану квартири">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>3D-візуалізація квартири</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <main id="scene" aria-label="Інтерактивна 3D-модель квартири"></main>
-  <aside class="panel" aria-label="Панель керування">
+  <div id="scene"></div>
+  <aside class="panel">
     <div class="panel-head"><h1>Квартира · 3D-модель</h1><button id="collapse" aria-expanded="true" aria-label="Згорнути панель" title="Згорнути панель">−</button></div>
     <div class="sub">Виправлено за планом на фото · орієнтацію та розміщення кімнат приведено до креслення</div>
     <div class="rooms">
@@ -34,12 +32,23 @@
       <button id="clearMeasure">Очистити вимір</button>
       <button id="deleteLabels">Видалити мітку</button>
       <button id="restoreLabels">Показати всі мітки</button>
-      <button id="undoStroke">Скасувати лінію</button>
+      <button id="undo">↶ Назад</button>
+      <button id="redo">↷ Вперед</button>
     </div>
-    <p class="hint">Сітка має крок 0,5 м. У режимі «Вимір» натисніть дві точки; кнопку «Очистити вимір» видаляє лінію. Для видалення мітки увімкніть режим і натисніть її. Нижні стрілки керують ракурсом; перетягування теж обертає модель.</p>
+    <p class="hint">Виміри та штрихи поки автозберігаються лише в цьому браузері. Для синхронізації між користувачами й пристроями потрібен серверний обліковий запис.</p>
   </aside>
   <div class="compass">План орієнтовано<br>за осями вихідної моделі</div>
   <div class="coords" id="coords">X: — м &nbsp; Y: — м</div>
+  <section class="toolbox" aria-label="Активний інструмент">
+    <div class="active-tool" id="activeTool"><strong>Огляд</strong><br>Перетягуйте модель для обертання</div>
+    <div class="tool-actions">
+      <button id="toolOverview" class="active" title="Обертати та оглядати модель">◉ Огляд</button>
+      <button id="toolMeasure" title="Виміряти відстань між двома точками">⌁ Лінійка</button>
+      <button id="toolBrush" title="Малювати на стінах">✎ Пензлик</button>
+      <button id="toolDelete" title="Натисніть на мітку, щоб видалити її">⌫ Мітки</button>
+      <input id="toolBrushColor" type="color" value="#d24735" aria-label="Колір ліній пензлика" title="Колір ліній">
+    </div>
+  </section>
   <nav class="nav" aria-label="Керування 3D-ракурсом">
     <button class="empty" tabindex="-1">·</button><button id="tiltUp" title="Більше згори" aria-label="Більше згори">↑</button><button id="zoomIn" title="Збільшити" aria-label="Збільшити">+</button>
     <button id="rotateLeft" title="Повернути ліворуч" aria-label="Повернути ліворуч">←</button><button id="resetView" title="Скинути ракурс" aria-label="Скинути ракурс">⌂</button><button id="rotateRight" title="Повернути праворуч" aria-label="Повернути праворуч">→</button>

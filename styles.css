@@ -16,12 +16,20 @@
     .controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
     button { border: 1px solid #ffffff24; color:#edf1ed; background:#26312e; padding:9px 12px; border-radius:10px; cursor:pointer; font: inherit; font-size:12px; }
     button:hover, button.active { background:#3a6756; border-color:#76a98f; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
     input[type="color"] { width:38px; height:35px; padding:3px; border:1px solid #ffffff24; border-radius:9px; background:#26312e; cursor:pointer; }
     .hint { margin: 13px 0 0; color:#91a09a; font-size:11px; line-height:1.5; }
-    .coords { position:fixed; z-index:2; left:22px; bottom:150px; padding:10px 13px; border:1px solid #ffffff24; border-radius:10px; background:#171d20e8; color:#f1f3ed; font-size:12px; line-height:1.55; font-variant-numeric:tabular-nums; box-shadow:0 8px 28px #0004; }
-    .nav { position:fixed; z-index:2; left:22px; bottom:18px; display:grid; grid-template-columns:repeat(3,38px); grid-template-rows:repeat(3,36px); gap:4px; padding:8px; border:1px solid #ffffff24; border-radius:14px; background:#171d20e8; backdrop-filter:blur(12px); box-shadow:0 10px 30px #0005; }
-    .nav button { padding:2px; font-size:15px; border-radius:9px; }
+    .coords { position:fixed; z-index:2; left:22px; bottom:158px; padding:10px 13px; border:1px solid #ffffff24; border-radius:10px; background:#171d20e8; color:#f1f3ed; font-size:12px; line-height:1.55; font-variant-numeric:tabular-nums; box-shadow:0 8px 28px #0004; }
+    .nav { position:fixed; z-index:2; right:22px; bottom:18px; display:grid; grid-template-columns:repeat(3,42px); grid-template-rows:repeat(3,42px); gap:4px; padding:8px; border:1px solid #ffffff24; border-radius:14px; background:#171d20e8; backdrop-filter:blur(12px); box-shadow:0 10px 30px #0005; }
+    .nav button { min-height:42px; padding:2px; font-size:16px; border-radius:9px; }
     .nav .empty { visibility:hidden; }
+    .toolbox { position:fixed; z-index:2; left:22px; bottom:18px; width:min(320px,calc(100vw - 180px)); padding:10px; border:1px solid #ffffff24; border-radius:14px; background:#171d20e8; backdrop-filter:blur(12px); box-shadow:0 10px 30px #0005; }
+    .active-tool { margin:0 0 8px; color:#d8e2db; font-size:12px; line-height:1.35; }
+    .active-tool strong { color:#fff; font-size:13px; }
+    .tool-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+    .tool-actions button { min-height:42px; padding:6px 8px; }
+    .tool-actions input[type="color"] { width:100%; min-height:42px; height:42px; }
+    .tool-actions .active { background:#3a6756; border-color:#76a98f; }
     .label { color:#f5f3e9; font-size:12px; font-weight:650; padding:5px 8px; border-radius:7px; background:#17211edb; border:1px solid #ffffff35; white-space:nowrap; text-shadow:0 1px 4px #000; pointer-events:none; }
     .compass {position:fixed;right:22px;top:22px;color:#d0dad3;background:#171d20cc;border:1px solid #ffffff20;border-radius:12px;padding:10px 13px;font-size:11px;line-height:1.7}
-    @media(max-width:600px){.panel{left:10px;top:10px;padding:14px}.compass{right:10px;top:auto;bottom:12px}.coords{left:10px;bottom:150px}.nav{left:10px;bottom:10px}}
+    @media(max-width:600px){.panel{left:10px;top:10px;padding:12px;max-height:calc(100dvh - 20px)}.panel-head h1{font-size:16px}.compass{right:10px;top:auto;bottom:12px}.coords{left:10px;bottom:156px;max-width:calc(100vw - 20px);font-size:11px}.nav{right:10px;bottom:10px;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(3,40px);gap:3px;padding:6px}.nav button{min-height:40px}.toolbox{left:10px;bottom:10px;width:min(208px,calc(100vw - 170px));padding:8px}.tool-actions button{font-size:11px;min-height:40px;padding:5px 3px}.active-tool{font-size:11px}.active-tool strong{font-size:12px}}

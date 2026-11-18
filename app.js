@@ -1,0 +1,97 @@
+// Self-contained Canvas renderer: no network imports, WebGL or external libraries.
+    const host=document.querySelector('#scene');
+    const canvas=document.createElement('canvas'); host.appendChild(canvas);
+    const ctx=canvas.getContext('2d');
+    const wallHeight=2.45, cutHeight=1.25, wallT=.12;
+    const roomData=[
+      {name:'3 · Кухня · 8,4 м²',pts:[[0,0],[2.61,0],[2.61,3.2],[0,3.2]],color:'#d1c5ae',label:[1.3,0,1.6]},
+      {name:'4 · Кімната · 11,9 м²',pts:[[2.61,0],[5.48,0],[5.48,4.13],[2.61,4.13]],color:'#b8c7bc',label:[4.05,0,2.05]},
+      {name:'5 · Кімната · 11,2 м²',pts:[[5.48,0],[8.45,0],[8.45,3.77],[5.48,3.77]],color:'#c8b99f',label:[6.95,0,1.9]},
+      {name:'Коридор · ≈10,4 м²',pts:[[1.4,4.13],[6.55,4.13],[6.55,5.83],[1.4,5.83]],color:'#b9b7aa',label:[4.05,0,4.95]},
+      {name:'Прохід на кухню',pts:[[1.4,3.2],[2.61,3.2],[2.61,4.13],[1.4,4.13]],color:'#b9b7aa',label:[2.0,0,3.66]},
+      {name:'',pts:[[5.48,3.77],[6.55,3.77],[6.55,4.13],[5.48,4.13]],color:'#b9b7aa'},
+      {name:'',pts:[[6.55,3.77],[8.45,3.77],[8.45,4.13],[6.55,4.13]],color:'#b9b7aa'},
+      {name:'',pts:[[0,4.13],[.2,4.13],[.2,5.83],[0,5.83]],color:'#b9b7aa'},
+      {name:'',pts:[[.2,4.13],[1.4,4.13],[1.4,5.83],[.2,5.83]],color:'#b9b7aa'},
+      {name:'',pts:[[6.55,5.74],[8.25,5.74],[8.25,5.83],[6.55,5.83]],color:'#b9b7aa'},
+      {name:'',pts:[[8.25,4.13],[8.45,4.13],[8.45,5.83],[8.25,5.83]],color:'#b9b7aa'},
+      {name:'2 · Туалет · ≈1,0 м²',pts:[[.2,3.2],[1.4,3.2],[1.4,4.0],[.2,4.0]],color:'#c3d0cf',label:[.8,0,3.6]},
+      {name:'6 · Ванна · 2,7 м²',pts:[[6.55,4.13],[8.25,4.13],[8.25,5.74],[6.55,5.74]],color:'#b6c8ca',label:[7.38,0,4.7]},
+      {name:'7 · Кімната · 15,8 м²',pts:[[5.5,5.83],[8.3,5.83],[8.3,11.47],[5.5,11.47]],color:'#adbdb5',label:[6.9,0,8.56]},
+      {name:'1 · Балкон · ≈1,9 м²',pts:[[2.0,-1.05],[6.5,-1.05],[6.5,-.63],[2.0,-.63]],color:'#a9bdb6',label:[4.2,0,-.85]},
+      {name:'8 · Ніша · ≈1,2 м²',pts:[[4.55,5.83],[5.55,5.83],[5.55,7.03],[4.55,7.03]],color:'#aab8b3',label:[5.05,0,6.4]}
+    ];
+    const wallDefs=[
+      [[0,0],[.8,0]],[[1.7,0],[3.2,0]],[[4.3,0],[5.7,0]],[[6.9,0],[8.45,0]],
+      [[8.45,0],[8.45,5.83]],[[8.45,5.83],[8.3,5.83]],[[8.3,5.83],[8.3,11.47]],[[8.3,11.47],[7.35,11.47]],[[6.45,11.47],[5.5,11.47]],[[5.5,6.63],[5.5,11.47]],
+      [[5.5,5.83],[0,5.83]],[[0,5.83],[0,5.25]],[[0,4.35],[0,0]],
+      [[2.61,0],[2.61,4.13]],[[5.48,0],[5.48,4.13]],
+      [[0,4.13],[.2,4.13]],[[.2,4.13],[1.4,4.13]],[[2.61,4.13],[3.35,4.13]],[[4.1,4.13],[5.48,4.13]],[[5.48,4.13],[5.8,4.13]],[[6.5,4.13],[6.55,4.13]],[[6.55,4.13],[8.25,4.13]],
+      [[0,3.2],[1.85,3.2]],[[2.55,3.2],[2.61,3.2]],
+      [[5.48,3.77],[5.8,3.77]],[[6.5,3.77],[8.45,3.77]],[[5.48,3.77],[5.48,4.13]],
+      [[.2,3.2],[1.4,3.2]],[[.2,3.2],[.2,4.0]],[[.2,4.0],[.45,4.0]],[[1.15,4.0],[1.4,4.0]],[[1.4,4.0],[1.4,3.2]],
+      [[6.55,4.13],[6.55,4.55]],[[6.55,5.25],[6.55,5.74]],[[6.55,5.74],[8.25,5.74]],[[8.25,5.74],[8.25,4.13]],
+      [[2.0,-1.05],[2.0,-.63]],[[2.0,-1.05],[6.5,-1.05]],[[6.5,-1.05],[6.5,-.63]],
+      [[4.55,5.83],[4.55,7.03]],[[4.55,7.03],[5.55,7.03]],[[5.55,7.03],[5.55,5.83]]
+    ];
+    const doors=[{axis:'x',x:2.2,z:3.2,w:.7},{axis:'x',x:3.72,z:4.13,w:.75},{axis:'x',x:6.15,z:3.77,w:.7},{axis:'x',x:.8,z:4.0,w:.7},{axis:'z',x:6.55,z:4.9,w:.7,color:'#805638',frame:'#d9c7ae'},{axis:'z',x:5.5,z:6.23,w:.8},{axis:'z',x:0,z:4.8,w:.9,color:'#72736e',frame:'#292d30'}];
+    const windows=[{x:1.25,z:0,w:.9},{x:3.75,z:0,w:1.1},{x:6.3,z:0,w:1.2},{x:6.9,z:11.47,w:.9}];
+    const fixtures=[{x:.62,z:3.78,w:.58,d:.34,h:.42,c:'#f1eee6'},{x:.85,z:3.48,w:.38,d:.38,h:.8,c:'#f1eee6'},{x:7.35,z:4.9,w:1.45,d:.55,h:.55,c:'#f1eee6'},{x:.45,z:1.05,w:.62,d:.62,h:.8,c:'#f1eee6'},{x:.45,z:2.2,w:.5,d:.45,h:.8,c:'#f1eee6'},
+      {x:.92,z:5.62,w:1.15,d:.32,h:.62,c:'#493c32'}, // low shoe rack beside the entrance
+      {x:2.45,z:5.62,w:1.05,d:.34,h:2.05,c:'#865a3d'} // shallow hall wardrobe / coat storage
+    ];
+    let full=false,showLabels=true,az=-.58,elev=.55,zoom=1,topView=false,drag=null,paintMode=false,drawing=null,gridEnabled=true,measureMode=false,measureStart=null,measureEnd=null,measureHover=null,deleteLabelMode=false;
+    const wallMarks=[],hiddenLabels=new Set();let labelBoxes=[];
+    let width=innerWidth,height=innerHeight,dpr=1,scale=40;
+    function resize(){width=innerWidth;height=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';scale=Math.min((width-24)/15,(height-105)/13)*zoom;draw();}
+    function project(x,y,z){const dx=x-4.2,dz=z-5.2,c=Math.cos(az),s=Math.sin(az),u=dx*c-dz*s,v=dx*s+dz*c;const tilt=topView?0.12:elev;return {x:width*.59+u*scale,y:height*.53+(v*Math.sin(tilt)-y*Math.cos(tilt))*scale,depth:v*Math.cos(tilt)+y*Math.sin(tilt)};}
+    function floorCoord(sx,sy){const c=Math.cos(az),s=Math.sin(az),tilt=topView ? 0.12 : elev,rx=sx-width*.59,ry=sy-height*.53,a=c*scale,b=-s*scale,cc=s*Math.sin(tilt)*scale,d=c*Math.sin(tilt)*scale,det=a*d-b*cc;if(Math.abs(det)<.01)return null;const dx=(rx*d-b*ry)/det,dz=(a*ry-rx*cc)/det;return {x:dx+4.2,y:dz+5.2};}
+    function poly(points,fill,stroke=null,line=1){ctx.beginPath();points.forEach((p,i)=>{const q=project(p[0],p[1],p[2]);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=line;ctx.stroke();}}
+    function wallFaces(a,b,h){const dx=b[0]-a[0],dz=b[1]-a[1],len=Math.hypot(dx,dz);if(len<.015)return;const nx=-dz/len*wallT/2,nz=dx/len*wallT/2;const p=[[a[0]+nx,a[1]+nz],[b[0]+nx,b[1]+nz],[b[0]-nx,b[1]-nz],[a[0]-nx,a[1]-nz]];const faces=[{pts:[p[0],p[1],[p[1][0],p[1][1],h],[p[0][0],p[0][1],h]],c:'#e8e1d5'},{pts:[p[3],p[2],[p[2][0],p[2][1],h],[p[3][0],p[3][1],h]],c:'#d4ccbd'},{pts:[[p[0][0],p[0][1],h],[p[1][0],p[1][1],h],[p[2][0],p[2][1],h],[p[3][0],p[3][1],h]],c:'#f2ede3'}];return faces;}
+    function wallSurface(index,side,h){const [a,b]=wallDefs[index],dx=b[0]-a[0],dz=b[1]-a[1],len=Math.hypot(dx,dz),nx=-dz/len*wallT/2*side,nz=dx/len*wallT/2*side;return {index,side,a,b,len,nx,nz,h};}
+    function surfacePoint(f,t,y){return [f.a[0]+(f.b[0]-f.a[0])*t+f.nx,y,f.a[1]+(f.b[1]-f.a[1])*t+f.nz];}
+    function wallSurfaces(h){const all=[];wallDefs.forEach((_,i)=>{all.push(wallSurface(i,1,h),wallSurface(i,-1,h));});return all;}
+    function insidePolygon(x,y,pts){let inside=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const a=pts[i],b=pts[j];if(((a.y>y)!==(b.y>y))&&(x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x))inside=!inside;}return inside;}
+    function screenPointOnSurface(f,t,y){const p=surfacePoint(f,t,y);return project(p[0],p[1],p[2]);}
+    function mapToSurface(f,x,y){const p0=screenPointOnSurface(f,0,0),p1=screenPointOnSurface(f,1,0),p3=screenPointOnSurface(f,0,f.h),ax=p1.x-p0.x,ay=p1.y-p0.y,bx=p3.x-p0.x,by=p3.y-p0.y,det=ax*by-ay*bx;if(Math.abs(det)<2)return null;const px=x-p0.x,py=y-p0.y;return {t:(px*by-py*bx)/det,y:((ax*py-ay*px)/det)*f.h};}
+    function wallAt(x,y){let best=null;for(const f of wallSurfaces(full?wallHeight:cutHeight)){const pts=[screenPointOnSurface(f,0,0),screenPointOnSurface(f,1,0),screenPointOnSurface(f,1,f.h),screenPointOnSurface(f,0,f.h)];if(!insidePolygon(x,y,pts))continue;const depth=pts.reduce((v,p)=>v+p.depth,0)/pts.length;if(!best||depth>best.depth)best={surface:f,depth};}return best?.surface||null;}
+    function cuboid(o){const {x,z,w,d,h}=o,x0=x-w/2,x1=x+w/2,z0=z-d/2,z1=z+d/2,y0=o.y||0,y1=y0+h;const top=[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],front=[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],side=[[x1,y0,z0],[x1,y0,z1],[x1,y1,z1],[x1,y1,z0]];poly(side,shade(o.c,-18));poly(front,shade(o.c,-7));poly(top,shade(o.c,16));}
+    function shade(hex,offset){const n=parseInt(hex.slice(1),16),r=Math.max(0,Math.min(255,(n>>16)+offset)),g=Math.max(0,Math.min(255,((n>>8)&255)+offset)),b=Math.max(0,Math.min(255,(n&255)+offset));return `rgb(${r},${g},${b})`;}
+    function draw(){labelBoxes=[];ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);ctx.fillStyle='#dbe2dd';ctx.fillRect(0,0,width,height);
+      for(const r of roomData){poly(r.pts.map(([x,z])=>[x,.015,z]),r.color,'#938f83',1);}
+      if(gridEnabled){for(const r of roomData){ctx.save();const path=r.pts.map(([x,z])=>project(x,.035,z));ctx.beginPath();path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.clip();for(let x=0;x<=8.5;x+=.5){const major=Math.abs(x-Math.round(x))<.01,p1=project(x,.04,-1.2),p2=project(x,.04,11.8);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=major?'#344a426e':'#344a4238';ctx.lineWidth=major?1.15:.65;ctx.stroke();}for(let y=-1;y<=11.5;y+=.5){const major=Math.abs(y-Math.round(y))<.01,p1=project(-.2,.04,y),p2=project(8.6,.04,y);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=major?'#344a426e':'#344a4238';ctx.lineWidth=major?1.15:.65;ctx.stroke();}ctx.restore();}}
+      // Fixtures are simple solid forms, kept subdued so the plan remains easy to read.
+      fixtures.forEach(cuboid);
+      const h=full?wallHeight:cutHeight,faces=[];for(const [a,b] of wallDefs)faces.push(...wallFaces(a,b,h));faces.sort((a,b)=>{const da=a.pts.reduce((s,p)=>s+project(p[0],p[2]||0,p[1]).depth,0)/a.pts.length,db=b.pts.reduce((s,p)=>s+project(p[0],p[2]||0,p[1]).depth,0)/b.pts.length;return da-db;});
+      for(const f of faces)poly(f.pts.map(p=>[p[0],p[2]||0,p[1]]),f.c,'#b7ae9f',.7);
+      // Glazed openings and simple timber door leaves sit in the wall gaps.
+      windows.forEach(({x,z,w})=>{const lo=.9,hi=1.78;poly([[x-w/2+.04,lo,z],[x+w/2-.04,lo,z],[x+w/2-.04,hi,z],[x-w/2+.04,hi,z]],'#78aaba','#f3eee4',2);const p1=project(x,lo,z),p2=project(x,hi,z);ctx.strokeStyle='#eef2e9';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();});
+      const doorHeight=full?2.03:cutHeight;
+      doors.forEach(d=>{const leaf=d.color||'#9a7655',frame=d.frame||'#e5d3b9';if(d.axis==='x')poly([[d.x-d.w/2,0,d.z],[d.x+d.w/2,0,d.z],[d.x+d.w/2,doorHeight,d.z],[d.x-d.w/2,doorHeight,d.z]],leaf,frame,1.5);else poly([[d.x,0,d.z-d.w/2],[d.x,0,d.z+d.w/2],[d.x,doorHeight,d.z+d.w/2],[d.x,doorHeight,d.z-d.w/2]],leaf,frame,1.5);const knob=project(d.axis==='x'?d.x+d.w*.25:d.x,Math.min(1.05,doorHeight*.68),d.axis==='x'?d.z:d.z+d.w*.25);ctx.fillStyle='#d9bd77';ctx.beginPath();ctx.arc(knob.x,knob.y,3,0,Math.PI*2);ctx.fill();});
+      for(const stroke of wallMarks){ctx.beginPath();stroke.points.forEach((pt,i)=>{const p=screenPointOnSurface(stroke.surface,pt.t,pt.y);i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);});ctx.strokeStyle=stroke.color;ctx.lineWidth=5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();}
+      if(gridEnabled){ctx.font='10px Inter,system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';for(let x=0;x<=8;x++){const p=project(x,.055,0);coordinateTag(String(x),p.x,p.y);}for(let y=0;y<=11;y++){const x=y<=5?0:5.5,p=project(x,.055,y);coordinateTag(String(y),p.x,p.y);}}
+      if(measureStart){const end=measureEnd||measureHover;if(end){const a=project(measureStart.x,.08,measureStart.y),b=project(end.x,.08,end.y);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#d24735';ctx.lineWidth=3;ctx.setLineDash([7,4]);ctx.stroke();ctx.setLineDash([]);for(const p of [a,b]){ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#d24735';ctx.lineWidth=2;ctx.stroke();}const dist=Math.hypot(end.x-measureStart.x,end.y-measureStart.y),mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};coordinateTag(`${dist.toFixed(2)} м`,mid.x,mid.y-15,'#9f392d');}}
+      if(showLabels){ctx.textAlign='center';ctx.textBaseline='middle';for(const r of roomData){if(!r.name||!r.label||hiddenLabels.has(r.name))continue;const p=project(r.label[0],.18,r.label[2]);const font=Math.max(10,Math.min(14,scale*.25));ctx.font=`650 ${font}px Inter,system-ui,sans-serif`;const tw=ctx.measureText(r.name).width+16;ctx.fillStyle='#17211edb';ctx.strokeStyle='#ffffff65';roundRect(p.x-tw/2,p.y-12,tw,24,7);ctx.fill();ctx.stroke();ctx.fillStyle='#fffdf5';ctx.fillText(r.name,p.x,p.y,tw-8);labelBoxes.push({key:r.name,x:p.x-tw/2,y:p.y-12,w:tw,h:24});}}
+    }
+    function coordinateTag(text,x,y,background='#f7f7eee8'){ctx.font='10px Inter,system-ui,sans-serif';const w=ctx.measureText(text).width+8;ctx.fillStyle=background;roundRect(x-w/2,y-8,w,16,4);ctx.fill();ctx.fillStyle=background==='#f7f7eee8'?'#283530':'#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,x,y);}
+    function roundRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+    canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);if(paintMode){const surface=wallAt(e.offsetX,e.offsetY);if(!surface){drawing=null;return;}const pt=mapToSurface(surface,e.offsetX,e.offsetY);if(!pt)return;drawing={surface,stroke:{surface,color:document.querySelector('#brushColor').value,points:[]}};wallMarks.push(drawing.stroke);drawing.stroke.points.push({t:Math.max(0,Math.min(1,pt.t)),y:Math.max(0,Math.min(surface.h,pt.y))});draw();return;}if(measureMode){const point=floorCoord(e.offsetX,e.offsetY);if(!point)return;if(!measureStart||measureEnd){measureStart=point;measureEnd=null;}else measureEnd=point;measureHover=null;updateReadout(point);draw();return;}if(deleteLabelMode){const hit=labelBoxes.find(b=>e.offsetX>=b.x&&e.offsetX<=b.x+b.w&&e.offsetY>=b.y&&e.offsetY<=b.y+b.h);if(hit){hiddenLabels.add(hit.key);draw();}return;}drag={x:e.clientX,y:e.clientY,az};});
+    canvas.addEventListener('pointermove',e=>{if(drawing){const pt=mapToSurface(drawing.surface,e.offsetX,e.offsetY);if(pt){drawing.stroke.points.push({t:Math.max(0,Math.min(1,pt.t)),y:Math.max(0,Math.min(drawing.surface.h,pt.y))});draw();}return;}if(measureMode){measureHover=measureStart?floorCoord(e.offsetX,e.offsetY):null;const p=floorCoord(e.offsetX,e.offsetY);if(p)updateReadout(p);if(!drag)draw();return;}const p=floorCoord(e.offsetX,e.offsetY);if(p)updateReadout(p);if(!drag)return;az=drag.az+(e.clientX-drag.x)*.008;draw();});
+    canvas.addEventListener('pointerup',()=>{drag=null;drawing=null;});canvas.addEventListener('pointercancel',()=>{drag=null;drawing=null;});canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(1.7,zoom*(e.deltaY>0?.92:1.08)));resize();},{passive:false});
+    document.querySelector('#height').onclick=e=>{full=!full;e.target.textContent=full?'Стіни: повні':'Стіни: зріз';draw();};
+    document.querySelector('#labels').onclick=e=>{showLabels=!showLabels;e.target.textContent=`Підписи: ${showLabels?'так':'ні'}`;e.target.classList.toggle('active',showLabels);draw();};
+    document.querySelector('#collapse').onclick=e=>{const panel=document.querySelector('.panel'),closed=panel.classList.toggle('collapsed');e.currentTarget.textContent=closed?'+':'−';e.currentTarget.title=closed?'Розгорнути панель':'Згорнути панель';e.currentTarget.setAttribute('aria-label',e.currentTarget.title);e.currentTarget.setAttribute('aria-expanded',String(!closed));};
+    document.querySelector('#paint').onclick=e=>{paintMode=!paintMode;if(paintMode){measureMode=false;deleteLabelMode=false;document.querySelector('#measure').textContent='Вимір: вимкнено';document.querySelector('#measure').classList.remove('active');document.querySelector('#deleteLabels').textContent='Видалити мітку';document.querySelector('#deleteLabels').classList.remove('active');}e.target.textContent=`Пензлик: ${paintMode?'увімкнено':'вимкнено'}`;e.target.classList.toggle('active',paintMode);canvas.style.cursor=paintMode?'crosshair':'grab';};
+    document.querySelector('#grid').onclick=e=>{gridEnabled=!gridEnabled;e.target.textContent=`Сітка X/Y: ${gridEnabled?'так':'ні'}`;e.target.classList.toggle('active',gridEnabled);draw();};
+    document.querySelector('#measure').onclick=e=>{measureMode=!measureMode;if(measureMode){paintMode=false;deleteLabelMode=false;document.querySelector('#paint').textContent='Пензлик: вимкнено';document.querySelector('#paint').classList.remove('active');document.querySelector('#deleteLabels').textContent='Видалити мітку';document.querySelector('#deleteLabels').classList.remove('active');}e.target.textContent=`Вимір: ${measureMode?'увімкнено':'вимкнено'}`;e.target.classList.toggle('active',measureMode);measureHover=null;canvas.style.cursor=measureMode?'crosshair':(paintMode?'crosshair':'grab');draw();};
+    document.querySelector('#clearMeasure').onclick=()=>{measureStart=null;measureEnd=null;measureHover=null;document.querySelector('#coords').innerHTML='X: — м &nbsp; Y: — м';draw();};
+    document.querySelector('#deleteLabels').onclick=e=>{deleteLabelMode=!deleteLabelMode;if(deleteLabelMode){paintMode=false;measureMode=false;document.querySelector('#paint').textContent='Пензлик: вимкнено';document.querySelector('#paint').classList.remove('active');document.querySelector('#measure').textContent='Вимір: вимкнено';document.querySelector('#measure').classList.remove('active');}e.target.textContent=`Видалити мітку: ${deleteLabelMode?'клацніть':'вимкнено'}`;e.target.classList.toggle('active',deleteLabelMode);canvas.style.cursor=deleteLabelMode?'pointer':'grab';};
+    document.querySelector('#restoreLabels').onclick=()=>{hiddenLabels.clear();draw();};
+    document.querySelector('#undoStroke').onclick=()=>{wallMarks.pop();draw();};
+    document.querySelector('#top').onclick=()=>{topView=!topView;draw();};document.querySelector('#home').onclick=()=>{az=-.58;elev=.55;zoom=1;topView=false;resize();};
+    document.querySelector('#resetView').onclick=()=>document.querySelector('#home').click();
+    document.querySelector('#rotateLeft').onclick=()=>{az-=.18;draw();};document.querySelector('#rotateRight').onclick=()=>{az+=.18;draw();};
+    document.querySelector('#tiltUp').onclick=()=>{elev=Math.min(1.15,elev+.08);topView=false;draw();};document.querySelector('#tiltDown').onclick=()=>{elev=Math.max(.2,elev-.08);topView=false;draw();};
+    document.querySelector('#zoomIn').onclick=()=>{zoom=Math.min(1.7,zoom*1.12);resize();};document.querySelector('#zoomOut').onclick=()=>{zoom=Math.max(.65,zoom/1.12);resize();};
+    function updateReadout(p){const coords=document.querySelector('#coords');let s=`X: ${p.x.toFixed(2)} м &nbsp; Y: ${p.y.toFixed(2)} м`;const end=measureEnd||(measureMode?measureHover:null);if(measureStart&&end){const dx=end.x-measureStart.x,dy=end.y-measureStart.y;s+=`<br>ΔX: ${dx.toFixed(2)} м &nbsp; ΔY: ${dy.toFixed(2)} м &nbsp; L: ${Math.hypot(dx,dy).toFixed(2)} м`;}coords.innerHTML=s;}
+    addEventListener('resize',resize);resize();

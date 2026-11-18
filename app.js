@@ -10,13 +10,12 @@
       {name:'Коридор · ≈10,4 м²',pts:[[1.4,4.13],[6.55,4.13],[6.55,5.83],[1.4,5.83]],color:'#b9b7aa',label:[4.05,0,4.95]},
       {name:'Прохід на кухню',pts:[[1.4,3.2],[2.61,3.2],[2.61,4.13],[1.4,4.13]],color:'#b9b7aa',label:[2.0,0,3.66]},
       {name:'',pts:[[5.48,3.77],[6.55,3.77],[6.55,4.13],[5.48,4.13]],color:'#b9b7aa'},
-      {name:'',pts:[[6.55,3.77],[8.45,3.77],[8.45,4.13],[6.55,4.13]],color:'#b9b7aa'},
       {name:'',pts:[[0,4.13],[.2,4.13],[.2,5.83],[0,5.83]],color:'#b9b7aa'},
       {name:'',pts:[[.2,4.13],[1.4,4.13],[1.4,5.83],[.2,5.83]],color:'#b9b7aa'},
       {name:'',pts:[[6.55,5.74],[8.25,5.74],[8.25,5.83],[6.55,5.83]],color:'#b9b7aa'},
       {name:'',pts:[[8.25,4.13],[8.45,4.13],[8.45,5.83],[8.25,5.83]],color:'#b9b7aa'},
       {name:'2 · Туалет · ≈1,0 м²',pts:[[.2,3.2],[1.4,3.2],[1.4,4.0],[.2,4.0]],color:'#c3d0cf',label:[.8,0,3.6]},
-      {name:'6 · Ванна · 2,7 м²',pts:[[6.55,4.13],[8.25,4.13],[8.25,5.74],[6.55,5.74]],color:'#b6c8ca',label:[7.38,0,4.7]},
+      {name:'6 · Ванна · 3,35 м²',pts:[[6.55,3.77],[8.25,3.77],[8.25,5.74],[6.55,5.74]],color:'#b6c8ca',label:[7.38,0,4.7]},
       {name:'7 · Кімната · 15,8 м²',pts:[[5.5,5.83],[8.3,5.83],[8.3,11.47],[5.5,11.47]],color:'#adbdb5',label:[6.9,0,8.56]},
       {name:'1 · Балкон · ≈1,9 м²',pts:[[2.0,-1.05],[6.5,-1.05],[6.5,-.63],[2.0,-.63]],color:'#a9bdb6',label:[4.2,0,-.85]},
       {name:'8 · Ніша · ≈1,2 м²',pts:[[4.55,5.83],[5.55,5.83],[5.55,7.03],[4.55,7.03]],color:'#aab8b3',label:[5.05,0,6.4]}
@@ -26,23 +25,23 @@
       [[8.45,0],[8.45,5.83]],[[8.45,5.83],[8.3,5.83]],[[8.3,5.83],[8.3,11.47]],[[8.3,11.47],[7.35,11.47]],[[6.45,11.47],[5.5,11.47]],[[5.5,6.63],[5.5,11.47]],
       [[5.5,5.83],[0,5.83]],[[0,5.83],[0,5.25]],[[0,4.35],[0,0]],
       [[2.61,0],[2.61,4.13]],[[5.48,0],[5.48,4.13]],
-      [[0,4.13],[.2,4.13]],[[.2,4.13],[1.4,4.13]],[[2.61,4.13],[3.35,4.13]],[[4.1,4.13],[5.48,4.13]],[[5.48,4.13],[5.8,4.13]],[[6.5,4.13],[6.55,4.13]],[[6.55,4.13],[8.25,4.13]],
+      [[0,4.13],[.2,4.13]],[[.2,4.13],[1.4,4.13]],[[2.61,4.13],[3.35,4.13]],[[4.1,4.13],[5.48,4.13]],[[5.48,4.13],[5.8,4.13]],
       [[0,3.2],[1.85,3.2]],[[2.55,3.2],[2.61,3.2]],
       [[5.48,3.77],[5.8,3.77]],[[6.5,3.77],[8.45,3.77]],[[5.48,3.77],[5.48,4.13]],
-      [[.2,3.2],[1.4,3.2]],[[.2,3.2],[.2,4.0]],[[.2,4.0],[.45,4.0]],[[1.15,4.0],[1.4,4.0]],[[1.4,4.0],[1.4,3.2]],
+      [[.2,3.2],[1.4,3.2]],[[.2,3.2],[.2,4.0]],[[1.4,3.2],[1.4,3.25]],[[1.4,3.95],[1.4,4.0]],[[.2,4.0],[1.4,4.0]],
+      [[6.55,3.77],[6.55,4.55]],
       [[6.55,4.13],[6.55,4.55]],[[6.55,5.25],[6.55,5.74]],[[6.55,5.74],[8.25,5.74]],[[8.25,5.74],[8.25,4.13]],
       [[2.0,-1.05],[2.0,-.63]],[[2.0,-1.05],[6.5,-1.05]],[[6.5,-1.05],[6.5,-.63]],
       [[4.55,5.83],[4.55,7.03]],[[4.55,7.03],[5.55,7.03]],[[5.55,7.03],[5.55,5.83]]
     ];
-    const doors=[{axis:'x',x:2.2,z:3.2,w:.7},{axis:'x',x:3.72,z:4.13,w:.75},{axis:'x',x:6.15,z:3.77,w:.7},{axis:'x',x:.8,z:4.0,w:.7},{axis:'z',x:6.55,z:4.9,w:.7,color:'#805638',frame:'#d9c7ae'},{axis:'z',x:5.5,z:6.23,w:.8},{axis:'z',x:0,z:4.8,w:.9,color:'#72736e',frame:'#292d30'}];
+    const doors=[{axis:'x',x:2.2,z:3.2,w:.7},{axis:'x',x:3.72,z:4.13,w:.75},{axis:'x',x:6.15,z:3.77,w:.7},{axis:'z',x:1.4,z:3.6,w:.7},{axis:'z',x:6.55,z:4.9,w:.7,color:'#805638',frame:'#d9c7ae'},{axis:'z',x:5.5,z:6.23,w:.8},{axis:'z',x:0,z:4.8,w:.9,color:'#72736e',frame:'#292d30'}];
     const windows=[{x:1.25,z:0,w:.9},{x:3.75,z:0,w:1.1},{x:6.3,z:0,w:1.2},{x:6.9,z:11.47,w:.9}];
     const fixtures=[{x:.62,z:3.78,w:.58,d:.34,h:.42,c:'#f1eee6'},{x:.85,z:3.48,w:.38,d:.38,h:.8,c:'#f1eee6'},{x:7.35,z:4.9,w:1.45,d:.55,h:.55,c:'#f1eee6'},{x:.45,z:1.05,w:.62,d:.62,h:.8,c:'#f1eee6'},{x:.45,z:2.2,w:.5,d:.45,h:.8,c:'#f1eee6'},
       {x:.92,z:5.62,w:1.15,d:.32,h:.62,c:'#493c32'}, // low shoe rack beside the entrance
-      {x:2.45,z:5.62,w:1.05,d:.34,h:2.05,c:'#865a3d'} // shallow hall wardrobe / coat storage
     ];
     let full=false,showLabels=true,az=-.58,elev=.55,zoom=1,topView=false,drag=null,paintMode=false,drawing=null,gridEnabled=true,measureMode=false,measureStart=null,measureEnd=null,measureHover=null,deleteLabelMode=false,pinch=null;
     const activePointers=new Map();
-    const wallMarks=[],measurements=[],hiddenLabels=new Set(),undoStack=[],redoStack=[];let labelBoxes=[];
+    const wallMarks=[],measurements=[],hiddenLabels=new Set(),undoStack=[],redoStack=[],sharedLayers=[];let labelBoxes=[];
     let localStorageKey='apartment-annotations-local';
     try{const existingBrowserId=localStorage.getItem('apartment-local-browser-id');if(!existingBrowserId){const freshId=`browser-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;localStorage.setItem('apartment-local-browser-id',freshId);localStorageKey=`apartment-annotations-${freshId}`;}else localStorageKey=`apartment-annotations-${existingBrowserId}`;}catch{}
     let width=innerWidth,height=innerHeight,dpr=1,scale=40;
@@ -61,7 +60,7 @@
     function editorSnapshot(){return {wallMarks:wallMarks.map(s=>({index:s.surface.index,side:s.surface.side,h:s.surface.h,color:s.color,points:s.points.map(p=>({t:p.t,y:p.y}))})),measurements:measurements.map(m=>({start:{...m.start},end:{...m.end}})),hiddenLabels:[...hiddenLabels],measureStart:measureStart?{...measureStart}:null,measureEnd:measureEnd?{...measureEnd}:null};}
     function restoreEditorSnapshot(snapshot){wallMarks.splice(0,wallMarks.length,...(snapshot.wallMarks||[]).map(s=>({surface:wallSurface(s.index,s.side,s.h),color:s.color,points:s.points.map(p=>({t:p.t,y:p.y}))})));measurements.splice(0,measurements.length,...(snapshot.measurements||[]).map(m=>({start:{...m.start},end:{...m.end}})));hiddenLabels.clear();(snapshot.hiddenLabels||[]).forEach(name=>hiddenLabels.add(name));measureStart=snapshot.measureStart?{...snapshot.measureStart}:null;measureEnd=snapshot.measureEnd?{...snapshot.measureEnd}:null;measureHover=null;if(measureStart)updateReadout(measureStart);else if(!measurements.length)document.querySelector('#coords').innerHTML='X: — м &nbsp; Y: — м';draw();}
     function updateHistoryButtons(){document.querySelector('#undo').disabled=undoStack.length===0;document.querySelector('#redo').disabled=redoStack.length===0;}
-    function saveLocalState(){try{localStorage.setItem(localStorageKey,JSON.stringify({version:1,state:editorSnapshot(),undo:undoStack,redo:redoStack}));}catch{document.querySelector('#activeTool').innerHTML='<strong>Не вдалося зберегти</strong><br>Перевірте вільне місце браузера';}}
+    function saveLocalState(){try{localStorage.setItem(localStorageKey,JSON.stringify({version:1,state:editorSnapshot(),undo:undoStack,redo:redoStack}));window.apartmentCloud?.scheduleSave();}catch{document.querySelector('#activeTool').innerHTML='<strong>Не вдалося зберегти</strong><br>Перевірте вільне місце браузера';}}
     function recordEdit(){undoStack.push(editorSnapshot());if(undoStack.length>60)undoStack.shift();redoStack.length=0;updateHistoryButtons();}
     function undoEdit(){if(!undoStack.length)return;redoStack.push(editorSnapshot());restoreEditorSnapshot(undoStack.pop());saveLocalState();updateHistoryButtons();}
     function redoEdit(){if(!redoStack.length)return;undoStack.push(editorSnapshot());restoreEditorSnapshot(redoStack.pop());saveLocalState();updateHistoryButtons();}
@@ -70,6 +69,7 @@
     function shade(hex,offset){const n=parseInt(hex.slice(1),16),r=Math.max(0,Math.min(255,(n>>16)+offset)),g=Math.max(0,Math.min(255,((n>>8)&255)+offset)),b=Math.max(0,Math.min(255,(n&255)+offset));return `rgb(${r},${g},${b})`;}
     function draw(){labelBoxes=[];ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);ctx.fillStyle='#dbe2dd';ctx.fillRect(0,0,width,height);
       for(const r of roomData){poly(r.pts.map(([x,z])=>[x,.015,z]),r.color,'#938f83',1);}
+      for(const layer of sharedLayers){for(const r of layer.plan?.rooms||[]){if(!Array.isArray(r.pts)||r.pts.length<3)continue;poly(r.pts.map(([x,z])=>[x,.035,z]),'#5aa2d044','#2680b7',2);}}
       if(gridEnabled){for(const r of roomData){ctx.save();const path=r.pts.map(([x,z])=>project(x,.035,z));ctx.beginPath();path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.clip();for(let x=0;x<=8.5;x+=.5){const major=Math.abs(x-Math.round(x))<.01,p1=project(x,.04,-1.2),p2=project(x,.04,11.8);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=major?'#344a426e':'#344a4238';ctx.lineWidth=major?1.15:.65;ctx.stroke();}for(let y=-1;y<=11.5;y+=.5){const major=Math.abs(y-Math.round(y))<.01,p1=project(-.2,.04,y),p2=project(8.6,.04,y);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=major?'#344a426e':'#344a4238';ctx.lineWidth=major?1.15:.65;ctx.stroke();}ctx.restore();}}
       // Fixtures are simple solid forms, kept subdued so the plan remains easy to read.
       fixtures.forEach(cuboid);
@@ -80,6 +80,7 @@
       const doorHeight=full?2.03:cutHeight;
       doors.forEach(d=>{const leaf=d.color||'#9a7655',frame=d.frame||'#e5d3b9';if(d.axis==='x')poly([[d.x-d.w/2,0,d.z],[d.x+d.w/2,0,d.z],[d.x+d.w/2,doorHeight,d.z],[d.x-d.w/2,doorHeight,d.z]],leaf,frame,1.5);else poly([[d.x,0,d.z-d.w/2],[d.x,0,d.z+d.w/2],[d.x,doorHeight,d.z+d.w/2],[d.x,doorHeight,d.z-d.w/2]],leaf,frame,1.5);const knob=project(d.axis==='x'?d.x+d.w*.25:d.x,Math.min(1.05,doorHeight*.68),d.axis==='x'?d.z:d.z+d.w*.25);ctx.fillStyle='#d9bd77';ctx.beginPath();ctx.arc(knob.x,knob.y,3,0,Math.PI*2);ctx.fill();});
       for(const stroke of wallMarks){ctx.beginPath();stroke.points.forEach((pt,i)=>{const p=screenPointOnSurface(stroke.surface,pt.t,pt.y);i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);});ctx.strokeStyle=stroke.color;ctx.lineWidth=5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();}
+      for(const layer of sharedLayers){for(const annotation of layer.annotations||[]){const p=annotation.payload||{};if(annotation.kind==='measurement'&&p.start&&p.end){const a=project(p.start.x,.08,p.start.y),b=project(p.end.x,.08,p.end.y);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='#2674a8';ctx.lineWidth=2;ctx.setLineDash([5,3]);ctx.stroke();ctx.setLineDash([]);coordinateTag(`${Math.hypot(p.end.x-p.start.x,p.end.y-p.start.y).toFixed(2)} м`,(a.x+b.x)/2,(a.y+b.y)/2-12,'#2674a8');}else if(annotation.kind==='wall_stroke'&&Array.isArray(p.points)){const f=wallSurface(p.index,p.side,wallHeight);ctx.beginPath();p.points.forEach((pt,i)=>{const q=screenPointOnSurface(f,pt.t,pt.y);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.strokeStyle=p.color||'#2674a8';ctx.lineWidth=5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();}}}
       if(gridEnabled){ctx.font='10px Inter,system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';for(let x=0;x<=8;x++){const p=project(x,.055,0);coordinateTag(String(x),p.x,p.y);}for(let y=0;y<=11;y++){const x=y<=5?0:5.5,p=project(x,.055,y);coordinateTag(String(y),p.x,p.y);}}
       const measureSegments=[...measurements];if(measureStart){const end=measureEnd||measureHover;if(end)measureSegments.push({start:measureStart,end,preview:true});}for(const item of measureSegments){const a=project(item.start.x,.08,item.start.y),b=project(item.end.x,.08,item.end.y);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=item.preview?'#d24735':'#a12f26';ctx.lineWidth=item.preview?3:2.5;ctx.setLineDash(item.preview?[7,4]:[]);ctx.stroke();ctx.setLineDash([]);for(const p of [a,b]){ctx.beginPath();ctx.arc(p.x,p.y,item.preview?5:4,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#d24735';ctx.lineWidth=2;ctx.stroke();}const dist=Math.hypot(item.end.x-item.start.x,item.end.y-item.start.y),mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};coordinateTag(`${dist.toFixed(2)} м`,mid.x,mid.y-15,'#9f392d');}
       if(showLabels){ctx.textAlign='center';ctx.textBaseline='middle';for(const r of roomData){if(!r.name||!r.label||hiddenLabels.has(r.name))continue;const p=project(r.label[0],.18,r.label[2]);const font=Math.max(10,Math.min(14,scale*.25));ctx.font=`650 ${font}px Inter,system-ui,sans-serif`;const tw=ctx.measureText(r.name).width+16;ctx.fillStyle='#17211edb';ctx.strokeStyle='#ffffff65';roundRect(p.x-tw/2,p.y-12,tw,24,7);ctx.fill();ctx.stroke();ctx.fillStyle='#fffdf5';ctx.fillText(r.name,p.x,p.y,tw-8);labelBoxes.push({key:r.name,x:p.x-tw/2,y:p.y-12,w:tw,h:24});}}
@@ -110,4 +111,5 @@
     document.querySelector('#toolMeasure').onclick=()=>document.querySelector('#measure').click();document.querySelector('#toolBrush').onclick=()=>document.querySelector('#paint').click();document.querySelector('#toolDelete').onclick=()=>document.querySelector('#deleteLabels').click();
     function updateReadout(p){const coords=document.querySelector('#coords');let s=`X: ${p.x.toFixed(2)} м &nbsp; Y: ${p.y.toFixed(2)} м`;const end=measureEnd||(measureMode?measureHover:null);if(measureStart&&end){const dx=end.x-measureStart.x,dy=end.y-measureStart.y;s+=`<br>ΔX: ${dx.toFixed(2)} м &nbsp; ΔY: ${dy.toFixed(2)} м &nbsp; L: ${Math.hypot(dx,dy).toFixed(2)} м`;}coords.innerHTML=s;}
     document.addEventListener('keydown',e=>{const mod=e.ctrlKey||e.metaKey;if(!mod||e.key.toLowerCase()!=='z')return;if(e.target instanceof HTMLElement&&['INPUT','TEXTAREA'].includes(e.target.tagName))return;e.preventDefault();e.shiftKey?redoEdit():undoEdit();});
+    window.apartmentApp={roomData,wallDefs,sharedLayers,draw,editorSnapshot,restoreEditorSnapshot,loadRemoteState(snapshot){restoreEditorSnapshot(snapshot);undoStack.length=0;redoStack.length=0;updateHistoryButtons();saveLocalState();},getOwnAnnotations(){const state=editorSnapshot(),rows=[];for(const m of state.measurements)rows.push({kind:'measurement',payload:m});for(const stroke of state.wallMarks)rows.push({kind:'wall_stroke',payload:{index:stroke.index,side:stroke.side,h:stroke.h,color:stroke.color,points:stroke.points}});for(const label of state.hiddenLabels)rows.push({kind:'hidden_label',payload:{name:label}});return rows;},setReadOnly(value){canvas.style.cursor=value?'default':'grab';}};
     loadLocalState();addEventListener('resize',resize);resize();

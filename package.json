@@ -2,8 +2,9 @@
   "name": "apartment-3d-visualization",
   "private": true,
   "scripts": {
-    "dev": "python3 -m http.server 4173",
-    "start": "python3 -m http.server 4173"
+    "build": "node build-config.mjs",
+    "dev": "node build-config.mjs && python3 -m http.server 4173",
+    "start": "node build-config.mjs && python3 -m http.server 4173"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
